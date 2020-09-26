@@ -13,7 +13,7 @@ type movieService struct {
 	movieStore MovieStore
 }
 
-func NewProductService(movieStore MovieStore) MovieService {
+func NewMovieService(movieStore MovieStore) MovieService {
 	return &movieService{movieStore: movieStore}
 }
 
