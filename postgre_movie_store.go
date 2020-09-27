@@ -12,11 +12,10 @@ import (
 
 var Queries = []string{
 	`CREATE TABLE IF NOT EXISTS movies (
-		id serial,
+		id serial primary key,
 		name text,
 		description text,
-		score double,
-		PRIMARY KEY(id)
+		score float8
 	);`,
 }
 
