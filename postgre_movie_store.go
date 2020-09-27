@@ -15,7 +15,7 @@ var Queries = []string{
 		id serial,
 		name text,
 		description text,
-		score text double
+		score text double,
 		PRIMARY KEY(id)
 	);`,
 }
