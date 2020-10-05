@@ -9,9 +9,13 @@ func (cmd *ListMoviesCommand) Exec(service MovieService) (interface{}, error) {
 }
 
 type CreateMovieCommand struct {
-	Name     string `json:"name"`
-	Description    string  `json:"description"`
-	Score 	float64 `json:"score"`
+	Name         string  `json:"name,omitempty"`
+	Photo        string  `json:"name,omitempty"`
+	Description  string  `json:"description,omitempty"`
+	Genre        string  `json:"genre,omitempty"`
+	Year         string  `json:"year,omitempty"`
+	CountEpisode string  `json:"count_episode,omitempty"`
+	Score        float64 `json:"score,omitempty"`
 }
 
 func (cmd *CreateMovieCommand) Exec(service MovieService) (interface{}, error) {

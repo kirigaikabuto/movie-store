@@ -14,7 +14,11 @@ var Queries = []string{
 	`CREATE TABLE IF NOT EXISTS movies (
 		id serial primary key,
 		name text,
+		photo text,
 		description text,
+		genre text,
+		year text,
+		count_episode text,
 		score float8
 	);`,
 }
@@ -46,7 +50,7 @@ func (ps *postgreStore) List() ([]Movie, error) {
 	defer data.Close()
 	for data.Next() {
 		movie := Movie{}
-		err = data.Scan(&movie.Id, &movie.Name, &movie.Description, &movie.Score)
+		err = data.Scan(&movie.Id,&movie.Name, &movie.Photo,&movie.Description, &movie.Genre,&movie.Year,&movie.CountEpisode,&movie.Score)
 		if err != nil {
 			return nil, err
 		}
@@ -56,7 +60,7 @@ func (ps *postgreStore) List() ([]Movie, error) {
 }
 
 func (ps *postgreStore) Create(movie *Movie) (*Movie, error) {
-	err := ps.db.QueryRow("insert into movies (name,description,score) values ($1,$2,$3) RETURNING id", movie.Name, movie.Description, movie.Score).Scan(&movie.Id)
+	err := ps.db.QueryRow("insert into movies (name,photo,description,genre,year,count_episode,score) values ($1,$2,$3,$4,$5,$6,$7) RETURNING id", movie.Name, movie.Photo,movie.Description, movie.Genre, movie.Year, movie.CountEpisode,movie.Score).Scan(&movie.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +69,7 @@ func (ps *postgreStore) Create(movie *Movie) (*Movie, error) {
 
 func (ps *postgreStore) GetById(id int64) (*Movie, error) {
 	movie := &Movie{}
-	err := ps.db.QueryRow("select * from movies where id= $1", id).Scan(&movie.Id, &movie.Name, &movie.Description, &movie.Score)
+	err := ps.db.QueryRow("select * from movies where id= $1", id).Scan(&movie.Id,&movie.Name, &movie.Photo,&movie.Description, &movie.Genre,&movie.Year,&movie.CountEpisode,&movie.Score)
 	if err != nil {
 		return nil, err
 	}

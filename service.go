@@ -29,6 +29,10 @@ func (ps *movieService) CreateMovie(cmd *CreateMovieCommand) (*Movie, error) {
 	movie := &Movie{
 		Name:     cmd.Name,
 		Description:    cmd.Description,
+		Photo: cmd.Photo,
+		Genre: cmd.Genre,
+		Year: cmd.Year,
+		CountEpisode: cmd.CountEpisode,
 		Score: cmd.Score,
 	}
 	newMovie, err := ps.movieStore.Create(movie)

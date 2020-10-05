@@ -1,17 +1,25 @@
 package movie_store
 
 type Movie struct {
-	Id          int64   `json:"id,omitempty"`
-	Name        string  `json:"name,omitempty"`
-	Description string  `json:"description,omitempty"`
-	Score       float64 `json:"score,omitempty"`
+	Id           int64   `json:"id,omitempty"`
+	Name         string  `json:"name,omitempty"`
+	Photo        string  `json:"name,omitempty"`
+	Description  string  `json:"description,omitempty"`
+	Genre        string  `json:"genre,omitempty"`
+	Year         string  `json:"year,omitempty"`
+	CountEpisode string  `json:"count_episode,omitempty"`
+	Score        float64 `json:"score,omitempty"`
 }
 
 type MovieUpdate struct {
-	Id          int64    `json:"id,omitempty"`
-	Name        *string  `json:"name,omitempty"`
-	Description *string  `json:"description,omitempty"`
-	Score       *float64 `json:"score,omitempty"`
+	Id           int64    `json:"id,omitempty"`
+	Name         *string  `json:"name,omitempty"`
+	Photo        *string  `json:"name,omitempty"`
+	Description  *string  `json:"description,omitempty"`
+	Genre        *string  `json:"genre,omitempty"`
+	Year         *string  `json:"year,omitempty"`
+	CountEpisode *string  `json:"count_episode,omitempty"`
+	Score        *float64 `json:"score,omitempty"`
 }
 
 type MovieStore interface {
