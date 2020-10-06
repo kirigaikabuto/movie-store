@@ -3,7 +3,7 @@ package movie_store
 type Movie struct {
 	Id           int64   `json:"id,omitempty"`
 	Name         string  `json:"name,omitempty"`
-	Photo        string  `json:"name,omitempty"`
+	Photo        string  `json:"photo,omitempty"`
 	Description  string  `json:"description,omitempty"`
 	Genre        string  `json:"genre,omitempty"`
 	Year         string  `json:"year,omitempty"`
@@ -14,7 +14,7 @@ type Movie struct {
 type MovieUpdate struct {
 	Id           int64    `json:"id,omitempty"`
 	Name         *string  `json:"name,omitempty"`
-	Photo        *string  `json:"name,omitempty"`
+	Photo        *string  `json:"photo,omitempty"`
 	Description  *string  `json:"description,omitempty"`
 	Genre        *string  `json:"genre,omitempty"`
 	Year         *string  `json:"year,omitempty"`
