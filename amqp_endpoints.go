@@ -100,6 +100,23 @@ func (fac *AMQPEndpointFactory) UpdateProductAMQPEndpoint() amqp.Handler {
 	}
 }
 
+func (fac *AMQPEndpointFactory) GetMovieByNameAMQPEndpoint() amqp.Handler {
+	return func(message amqp.Message) *amqp.Message{
+		cmd := &GetMovieByNameCommand{}
+		if err := json.Unmarshal(message.Body, cmd); err != nil {
+			return AMQPError(err)
+		}
+		if cmd.Name == "" {
+			return AMQPError(&ErrorSt{errors.New("no movie name").Error()})
+		}
+		resp, err := cmd.Exec(fac.movieService)
+		if err != nil {
+			return AMQPError(err)
+		}
+		return OK(resp)
+	}
+}
+
 func OK(d interface{}) *amqp.Message {
 	data, _ := json.Marshal(d)
 	return &amqp.Message{Body: data}

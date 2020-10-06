@@ -28,4 +28,5 @@ type MovieStore interface {
 	GetById(id int64) (*Movie, error)
 	Update(movie *MovieUpdate) (*Movie, error)
 	Delete(id int64) error
+	GetByName(name string) (*Movie, error)
 }

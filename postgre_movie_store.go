@@ -128,3 +128,16 @@ func (ps *postgreStore) Delete(id int64) error {
 	}
 	return nil
 }
+
+func (ps *postgreStore) GetByName(name string) (*Movie, error) {
+	movie := &Movie{}
+	err := ps.db.QueryRow("select * from movies where name= $1", name).Scan(&movie.Id, &movie.Name, &movie.Photo, &movie.Description, &movie.Genre, &movie.Year, &movie.CountEpisode, &movie.Score)
+	if err != nil {
+		return nil, err
+	}
+	if movie.Id == 0 {
+		fmt.Println("go to error with movie")
+		return nil, errors.New("no data by name")
+	}
+	return movie, nil
+}

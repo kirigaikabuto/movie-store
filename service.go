@@ -7,6 +7,7 @@ type MovieService interface {
 	GetMovieById(cmd *GetMovieByIdCommand) (*Movie, error)
 	UpdateMovie(cmd *UpdateMovieCommand) (*Movie, error)
 	DeleteMovie(cmd *DeleteMovieCommand) error
+	GetMovieByName(cmd *GetMovieByNameCommand) (*Movie, error)
 }
 
 type movieService struct {
@@ -85,4 +86,11 @@ func (ps *movieService) DeleteMovie(cmd *DeleteMovieCommand) error {
 		return err
 	}
 	return nil
+}
+func (ps *movieService) GetMovieByName(cmd *GetMovieByNameCommand) (*Movie, error){
+	movie,err := ps.movieStore.GetByName(cmd.Name)
+	if err != nil {
+		return nil, err
+	}
+	return movie,nil
 }

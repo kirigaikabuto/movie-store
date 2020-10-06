@@ -48,3 +48,11 @@ type DeleteMovieCommand struct {
 func (cmd *DeleteMovieCommand) Exec(service MovieService) (interface{}, error) {
 	return nil, service.DeleteMovie(cmd)
 }
+
+type GetMovieByNameCommand struct {
+	Name string `json:"name"`
+}
+
+func (cmd *GetMovieByNameCommand) Exec(service MovieService) (interface{}, error) {
+	return service.GetMovieByName(cmd)
+}
