@@ -2,7 +2,7 @@ package movie_store
 
 
 type MovieService interface {
-	ListMovies() ([]Movie, error)
+	ListMovies(cmd *ListMoviesCommand) ([]Movie, error)
 	CreateMovie(cmd *CreateMovieCommand) (*Movie, error)
 	GetMovieById(cmd *GetMovieByIdCommand) (*Movie, error)
 	UpdateMovie(cmd *UpdateMovieCommand) (*Movie, error)
@@ -17,8 +17,8 @@ func NewMovieService(movieStore MovieStore) MovieService {
 	return &movieService{movieStore: movieStore}
 }
 
-func (ps *movieService) ListMovies() ([]Movie, error) {
-	movies, err := ps.movieStore.List()
+func (ps *movieService) ListMovies(cmd *ListMoviesCommand) ([]Movie, error) {
+	movies, err := ps.movieStore.List(cmd.Count)
 	if err != nil {
 		return nil, err
 	}

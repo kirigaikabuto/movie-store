@@ -23,7 +23,7 @@ type MovieUpdate struct {
 }
 
 type MovieStore interface {
-	List() ([]Movie, error)
+	List(count int64) ([]Movie, error)
 	Create(movie *Movie) (*Movie, error)
 	GetById(id int64) (*Movie, error)
 	Update(movie *MovieUpdate) (*Movie, error)

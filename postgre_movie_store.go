@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	_ "github.com/lib/pq"
 	"log"
 	"strconv"
 	"strings"
-	_ "github.com/lib/pq"
 )
 
 var Queries = []string{
@@ -41,16 +41,16 @@ func NewPostgreStore(cfg Config) (MovieStore, error) {
 	return &postgreStore{db: db}, err
 }
 
-func (ps *postgreStore) List() ([]Movie, error) {
+func (ps *postgreStore) List(count int64) ([]Movie, error) {
 	var movies []Movie
-	data, err := ps.db.Query("select * from movies")
+	data, err := ps.db.Query("select * from movies limit $1", count)
 	if err != nil {
 		return nil, err
 	}
 	defer data.Close()
 	for data.Next() {
 		movie := Movie{}
-		err = data.Scan(&movie.Id,&movie.Name, &movie.Photo,&movie.Description, &movie.Genre,&movie.Year,&movie.CountEpisode,&movie.Score)
+		err = data.Scan(&movie.Id, &movie.Name, &movie.Photo, &movie.Description, &movie.Genre, &movie.Year, &movie.CountEpisode, &movie.Score)
 		if err != nil {
 			return nil, err
 		}
@@ -60,7 +60,7 @@ func (ps *postgreStore) List() ([]Movie, error) {
 }
 
 func (ps *postgreStore) Create(movie *Movie) (*Movie, error) {
-	err := ps.db.QueryRow("insert into movies (name,photo,description,genre,year,count_episode,score) values ($1,$2,$3,$4,$5,$6,$7) RETURNING id", movie.Name, movie.Photo,movie.Description, movie.Genre, movie.Year, movie.CountEpisode,movie.Score).Scan(&movie.Id)
+	err := ps.db.QueryRow("insert into movies (name,photo,description,genre,year,count_episode,score) values ($1,$2,$3,$4,$5,$6,$7) RETURNING id", movie.Name, movie.Photo, movie.Description, movie.Genre, movie.Year, movie.CountEpisode, movie.Score).Scan(&movie.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (ps *postgreStore) Create(movie *Movie) (*Movie, error) {
 
 func (ps *postgreStore) GetById(id int64) (*Movie, error) {
 	movie := &Movie{}
-	err := ps.db.QueryRow("select * from movies where id= $1", id).Scan(&movie.Id,&movie.Name, &movie.Photo,&movie.Description, &movie.Genre,&movie.Year,&movie.CountEpisode,&movie.Score)
+	err := ps.db.QueryRow("select * from movies where id= $1", id).Scan(&movie.Id, &movie.Name, &movie.Photo, &movie.Description, &movie.Genre, &movie.Year, &movie.CountEpisode, &movie.Score)
 	if err != nil {
 		return nil, err
 	}

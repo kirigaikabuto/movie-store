@@ -1,11 +1,11 @@
 package movie_store
 
-
 type ListMoviesCommand struct {
+	Count int64 `json:"count,omitempty"`
 }
 
 func (cmd *ListMoviesCommand) Exec(service MovieService) (interface{}, error) {
-	return service.ListMovies()
+	return service.ListMovies(cmd)
 }
 
 type CreateMovieCommand struct {
@@ -31,10 +31,10 @@ func (cmd *GetMovieByIdCommand) Exec(service MovieService) (interface{}, error) 
 }
 
 type UpdateMovieCommand struct {
-	Id       int64   `json:"id"`
-	Name     *string `json:"name"`
-	Description    *string  `json:"description"`
-	Score *float64 `json:"score"`
+	Id          int64    `json:"id"`
+	Name        *string  `json:"name"`
+	Description *string  `json:"description"`
+	Score       *float64 `json:"score"`
 }
 
 func (cmd *UpdateMovieCommand) Exec(service MovieService) (interface{}, error) {
@@ -46,5 +46,5 @@ type DeleteMovieCommand struct {
 }
 
 func (cmd *DeleteMovieCommand) Exec(service MovieService) (interface{}, error) {
-	return nil,service.DeleteMovie(cmd)
+	return nil, service.DeleteMovie(cmd)
 }
