@@ -86,5 +86,11 @@ func (ms *movieStore) Delete(id int64) error {
 	return nil
 }
 func (ms *movieStore) GetByName(name string) (*Movie, error) {
-	return nil, nil
+	filter := bson.D{{"name", name}}
+	movie := &Movie{}
+	err := collection.FindOne(context.TODO(), filter).Decode(&movie)
+	if err != nil {
+		return nil, err
+	}
+	return movie, nil
 }
