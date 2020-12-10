@@ -32,6 +32,9 @@ func NewMongoStore(config MongoConfig) (MovieStore, error) {
 
 func (ms *movieStore) List(count int64) ([]Movie, error) {
 	findOptions := options.Find()
+	if count != 0 {
+		findOptions = findOptions.SetLimit(count)
+	}
 	var movies []Movie
 	cur, err := collection.Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
@@ -68,7 +71,13 @@ func (ms *movieStore) Create(movie *Movie) (*Movie, error) {
 	return movie, nil
 }
 func (ms *movieStore) GetById(id int64) (*Movie, error) {
-	return nil, nil
+	filter := bson.D{{"id", id}}
+	movie := &Movie{}
+	err := collection.FindOne(context.TODO(), filter).Decode(&movie)
+	if err != nil {
+		return nil, err
+	}
+	return movie, nil
 }
 func (ms *movieStore) Update(movie *MovieUpdate) (*Movie, error) {
 	return nil, nil
